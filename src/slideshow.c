@@ -639,7 +639,11 @@ void feh_filelist_image_remove(winwidget winwid, char do_delete)
 		if (do_delete)
 			filelist = feh_file_rm_and_free(filelist, doomed);
 		else
+#ifdef CONFIG_UNDELETE
+			filelist = feh_file_remove_from_list_keep(filelist, doomed);
+#else
 			filelist = feh_file_remove_from_list(filelist, doomed);
+#endif
 		if (!filelist) {
 			/* No more images. Game over ;-) */
 			winwidget_destroy(winwid);
@@ -656,6 +660,20 @@ void feh_filelist_image_remove(winwidget winwid, char do_delete)
 		winwidget_destroy(winwid);
 	}
 }
+
+#ifdef CONFIG_UNDELETE
+void feh_filelist_image_undelete(winwidget winwid)
+{
+	if (winwid->type != WIN_TYPE_SLIDESHOW)
+		return;
+	int modified;
+	filelist = feh_file_undelete(filelist, current_file, &modified);
+	if (modified) {
+		slideshow_change_image(winwid, SLIDE_PREV, 0);
+		winwidget_render_image(winwid, 1, 0);
+	}
+}
+#endif
 
 void slideshow_save_image(winwidget win)
 {

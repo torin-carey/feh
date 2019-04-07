@@ -39,6 +39,11 @@ int filelist_len = 0;
 gib_list *current_file = NULL;
 extern int errno;
 
+#ifdef CONFIG_UNDELETE
+gib_list *filelist_removed = NULL;
+int filelist_removed_len = 0;
+#endif
+
 static gib_list *rm_filelist = NULL;
 
 feh_file *feh_file_new(char *filename)
@@ -116,6 +121,47 @@ gib_list *feh_file_rm_and_free(gib_list * list, gib_list * l)
 	unlink(FEH_FILE(l->data)->filename);
 	return(feh_file_remove_from_list(list, l));
 }
+
+#ifdef CONFIG_UNDELETE
+gib_list *feh_file_undelete(gib_list * list, gib_list * l, int * modified)
+{
+	if (!filelist_removed) {
+		*modified = 0;
+		return(list);
+	}
+	D(("filelist_len %d -> %d\n", filelist_len, filelist_len + 1));
+	filelist_len++;
+	filelist_removed_len--;
+	gib_list *item = filelist_removed;
+	filelist_removed = item->next;
+	item->next = l;
+	if (l->prev) {
+		l->prev->next = item;
+		item->prev = l->prev;
+		l->prev = item;
+	} else {
+		item->prev = NULL;
+		l->prev = item;
+		list = item;
+	}
+	*modified = 1;
+	return(list);
+}
+
+gib_list *feh_file_remove_from_list_keep(gib_list * list, gib_list * l)
+{
+	D(("filelist_len %d -> %d\n", filelist_len, filelist_len - 1));
+	filelist_len--;
+	filelist_removed_len++;
+	list = gib_list_unlink(list, l);
+	l->next = filelist_removed;
+	l->prev = NULL;
+	if (filelist_removed)
+		filelist_removed->prev = l;
+	filelist_removed = l;
+	return(list);
+}
+#endif
 
 gib_list *feh_file_remove_from_list(gib_list * list, gib_list * l)
 {

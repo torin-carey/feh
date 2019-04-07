@@ -172,6 +172,9 @@ void feh_display_status(char stat);
 void real_loadables_mode(int loadable);
 void feh_reload_image(winwidget w, int resize, int force_new);
 void feh_filelist_image_remove(winwidget winwid, char do_delete);
+#ifdef CONFIG_UNDELETE
+void feh_filelist_image_undelete(winwidget winwid);
+#endif
 void feh_imlib_print_load_error(char *file, winwidget w, Imlib_Load_Error err);
 void slideshow_save_image(winwidget win);
 void feh_edit_inplace(winwidget w, int orientation);

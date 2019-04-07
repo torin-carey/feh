@@ -8,6 +8,7 @@ exif ?= 0
 help ?= 0
 verscmp ?= 1
 xinerama ?= 1
+undelete ?= 1
 
 # Prefix for all installed files
 PREFIX ?= /usr/local
@@ -91,6 +92,10 @@ ifeq (${inotify},1)
 	MAN_INOTIFY = enabled
 else
 	MAN_INOTIFY = disabled
+endif
+
+ifeq (${undelete},1)
+	CFLAGS += -DCONFIG_UNDELETE
 endif
 
 MAN_DATE ?= ${shell date '+%B %d, %Y'}

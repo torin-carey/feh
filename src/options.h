@@ -181,6 +181,9 @@ enum key_action {
 	EVENT_close,
 	EVENT_remove,
 	EVENT_delete,
+#ifdef CONFIG_UNDELETE
+	EVENT_undelete,
+#endif
 	EVENT_jump_first,
 	EVENT_jump_last,
 	EVENT_action_0,

@@ -95,6 +95,10 @@ void feh_prepare_filelist(void);
 int feh_write_filelist(gib_list * list, char *filename);
 gib_list *feh_read_filelist(char *filename);
 char *feh_absolute_path(char *path);
+#ifdef CONFIG_UNDELETE
+gib_list *feh_file_undelete(gib_list * list, gib_list * l, int * modified);
+gib_list *feh_file_remove_from_list_keep(gib_list * list, gib_list * l);
+#endif
 gib_list *feh_file_remove_from_list(gib_list * list, gib_list * l);
 void feh_save_filelist();
 
