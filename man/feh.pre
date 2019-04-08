@@ -1666,6 +1666,10 @@ Remove current file from filelist
 .
 Remove current file from filelist and delete it
 .
+.It u Bq undelete
+.
+Place the last deleted image before the current image. Only works with remove.
+.
 .It Ao keypad Left Ac , Ao Ctrl+Left Ac Bq scroll_left
 .
 Scroll to the left

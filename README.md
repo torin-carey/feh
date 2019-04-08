@@ -93,6 +93,7 @@ indicates that the corresponding feature is enabled by default.
 | stat64 | 0 | Support CIFS shares from 64bit hosts on 32bit machines |
 | verscmp | 1 | Support naturing sorting (`--version-sort`). Requires a GNU-compatible libc exposing `strverscmp` |
 | xinerama | 1 | Support Xinerama/XRandR multiscreen setups |
+| undelete | 1 | Support adding of removed items |
 
 For example, `make xinerama=0 debug=1` will disable Xinerama support and
 produce a debug build; libcurl and natural sorting support will remain enabled.

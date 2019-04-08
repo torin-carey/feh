@@ -188,6 +188,7 @@ DEFAULT KEYS
  <DELETE>                Remove the currently viewed file from the filelist
  <CTRL+DELETE>           Like <DELETE>, but also removes the file from the
                          filesystem. Caution: Does not ask for confirmation
+ u                       Re-add items deleted using <DELETE>
  <KEYPAD LEFT>           Move the image to the left
  <KEYPAD RIGHT>          Move the image to the right
  <KEYPAD UP>             Move the image up
