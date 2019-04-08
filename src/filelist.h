@@ -96,6 +96,7 @@ int feh_write_filelist(gib_list * list, char *filename);
 gib_list *feh_read_filelist(char *filename);
 char *feh_absolute_path(char *path);
 #ifdef CONFIG_UNDELETE
+int feh_filelist_removed_len(void);
 gib_list *feh_file_undelete(gib_list * list, gib_list * l, int * modified);
 gib_list *feh_file_remove_from_list_keep(gib_list * list, gib_list * l);
 #endif

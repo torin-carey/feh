@@ -123,6 +123,11 @@ gib_list *feh_file_rm_and_free(gib_list * list, gib_list * l)
 }
 
 #ifdef CONFIG_UNDELETE
+int feh_filelist_removed_len(void)
+{
+	return(filelist_removed_len);
+}
+
 gib_list *feh_file_undelete(gib_list * list, gib_list * l, int * modified)
 {
 	if (!filelist_removed) {

@@ -796,7 +796,7 @@ void feh_draw_filename(winwidget w)
 	static Imlib_Font fn = NULL;
 	int tw = 0, th = 0, nw = 0;
 	Imlib_Image im = NULL;
-	char *s = NULL;
+	char *s = NULL, *r = NULL;
 	int len = 0;
 
 	if ((!w->file) || (!FEH_FILE(w->file->data))
@@ -826,13 +826,26 @@ void feh_draw_filename(winwidget w)
 			tw = nw;
 	}
 
+#ifdef CONFIG_UNDELETE
+	if (feh_filelist_removed_len()) {
+		len = snprintf(NULL, 0, "%d removed", feh_filelist_removed_len()) + 1;
+		r = emalloc(len);
+		snprintf(r, len, "%d removed", feh_filelist_removed_len());
+
+		gib_imlib_get_text_size(fn, r, NULL, &nw, NULL, IMLIB_TEXT_TO_RIGHT);
+
+		if (nw > tw)
+			tw = nw;
+	}
+#endif
+
 	tw += 3;
 	th += 3;
-	im = imlib_create_image(tw, 2 * th);
+	im = imlib_create_image(tw, 3 * th);
 	if (!im)
 		eprintf("Couldn't create image. Out of memory?");
 
-	feh_imlib_image_fill_text_bg(im, tw, 2 * th);
+	feh_imlib_image_fill_text_bg(im, tw, 3 * th);
 
 	gib_imlib_text_draw(im, fn, NULL, 2, 2, FEH_FILE(w->file->data)->filename,
 			IMLIB_TEXT_TO_RIGHT, 0, 0, 0, 255);
@@ -844,6 +857,15 @@ void feh_draw_filename(winwidget w)
 		gib_imlib_text_draw(im, fn, NULL, 1, th, s, IMLIB_TEXT_TO_RIGHT, 255, 255, 255, 255);
 		free(s);
 	}
+
+#ifdef CONFIG_UNDELETE
+	if (r) {
+		len = s ? 2*th : th;
+		gib_imlib_text_draw(im, fn, NULL, 2, len + 1, r, IMLIB_TEXT_TO_RIGHT, 0, 0, 0, 255);
+		gib_imlib_text_draw(im, fn, NULL, 1, len, r, IMLIB_TEXT_TO_RIGHT, 255, 255, 255, 255);
+		free(r);
+	}
+#endif
 
 	gib_imlib_render_image_on_drawable(w->bg_pmap, im, 0, 0, 1, 1, 0);
 
