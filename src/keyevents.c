@@ -165,7 +165,7 @@ void init_keyevents(void) {
 	feh_set_kb("remove"    , 0, XK_Delete    , 0, 0            , 0, 0);
 	feh_set_kb("delete"    , 4, XK_Delete    , 0, 0            , 0, 0);
 #ifdef CONFIG_UNDELETE
-	feh_set_kb("undelete"  , 0, XK_u         , 0, 0            , 0, 0);
+	feh_set_kb("undelete"  , 0, XK_u         , 4, XK_z         , 0, 0);
 #endif
 	feh_set_kb("jump_first" , 0, XK_Home      , 0, XK_KP_Home   , 0, 0);
 	feh_set_kb("jump_last" , 0, XK_End       , 0, XK_KP_End    , 0, 0);

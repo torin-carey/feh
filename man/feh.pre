@@ -1666,7 +1666,7 @@ Remove current file from filelist
 .
 Remove current file from filelist and delete it
 .
-.It u Bq undelete
+.It u , Ao Ctrl+z Ac Bq undelete
 .
 Place the last deleted image before the current image. Only works with remove.
 .
